@@ -1,0 +1,11 @@
+{
+  "name": "chrome-llm-translator",
+  "version": "0.18.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tools/tests/*.test.mjs",
+    "check": "node tools/check.mjs"
+  }
+}

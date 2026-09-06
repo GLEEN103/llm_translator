@@ -1,0 +1,29 @@
+# Secrets: retain only the public empty template.
+.env
+.env.*
+!.env.example
+.secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+config/local-server.json
+
+# Dependencies and generated output.
+node_modules/
+dist/
+build/
+coverage/
+__pycache__/
+.venv/
+
+# Logs and local artifacts can contain page content or credentials.
+*.log
+logs/
+.local/
+tmp/
+tools/.tmp/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>YouTube 자막 오버레이 로컬 검증</title>
+<style>body{margin:20px;font:15px system-ui;background:#eee;color:#172334}#movie_player{width:800px;height:450px;max-width:100%;position:relative;background:#152538}video{width:100%;height:100%;object-fit:contain}button{padding:8px;margin:4px}#status{white-space:pre-wrap}#checks{white-space:pre-wrap}</style></head><body>
+<h1>YouTube 자막 오버레이 · 공개 더미 검증</h1>
+<style>
+#top-level-buttons-computed button{box-sizing:border-box;height:40px;font:500 16px/20px Arial,sans-serif;border:0;border-radius:999px;padding:0 16px;background:#f2f2f2;color:#0f0f0f}
+html[dark] body{background:#0f0f0f;color:#f1f1f1}html[dark] #top-level-buttons-computed button{background:#272727;color:#f1f1f1}
+</style><button id="theme-toggle">다크/라이트 전환</button><button id="button-size">버튼 높이 48px 전환</button><label><input id="inline-hang" type="checkbox">열기 응답 없음</label>
+<p>기기에서 생성한 무음 미디어로 HTMLVideoElement 재생 시간을 검증합니다. YouTube·Google 네트워크 요청은 하지 않습니다.</p>
+<div id="movie_player"><video muted controls preload="auto"></video></div>
+<ytd-watch-metadata><div id="top-level-buttons-computed" style="display:flex;align-items:center;flex-wrap:wrap;margin:12px 0"><segmented-like-dislike-button-view-model><button>좋아요 123</button><button>싫어요</button></segmented-like-dislike-button-view-model><button>공유</button></div></ytd-watch-metadata>
+<button id="launcher-checks">페이지 버튼 회귀 검사</button><label><input id="inline-settings" type="checkbox">설정 필요</label><label><input id="inline-error" type="checkbox">패널 열기 오류</label><pre id="launcher-status"></pre>
+<button id="open">자막 번역 열기</button><button id="seek-one">1초로 이동 / 일시정지</button><button id="seek-two">4초로 이동 / 일시정지</button><button id="seek-gap">8초 빈 구간</button><button id="play">재생</button><button id="pause">일시정지</button><button id="speed">2배속</button><button id="fullscreen">전체화면</button><button id="ad">광고 전환</button><button id="navigate">영상 변경</button>
+<button id="load-later">후속 자막 구간 로드</button><button id="seek-later">10초 후속 구간</button>
+<label><input id="delay" type="checkbox">응답 지연 4초</label><label><input id="fail" type="checkbox">공급자 오류</label><label><input id="no-captions" type="checkbox">자막 없음</label>
+<p id="status" role="status"></p><pre id="checks"></pre>
+<script src="/core.js"></script><script src="/video-core.js"></script><script src="/video-style.js"></script><script src="/video-session.js"></script><script src="/video-fixture.js"></script><script src="/youtube-dom.js"></script><script src="/video-content.js"></script>
+<script src="/youtube-launcher.js"></script><script src="/launcher-fixture.js"></script>
+</body></html>

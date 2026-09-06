@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>토큰 사용 통계</title><link rel="stylesheet" href="ui.css"><link rel="stylesheet" href="statistics.css"></head>
+<body><main class="statistics">
+  <header><div><p class="eyebrow">번역 API · 이 브라우저의 기록</p><h1>토큰 사용 통계</h1><p class="muted">번역 요청에 대해 API가 알려준 사용량을 모아 보여줍니다.</p></div><a href="options.html">API 설정</a></header>
+  <section class="filters" aria-label="통계 필터">
+    <label>기간<select id="period"><option value="1">오늘</option><option value="7">최근 7일</option><option value="30" selected>최근 30일</option><option value="0">전체 보관기간</option></select></label>
+    <label>공급자<select id="provider"><option value="">전체 공급자</option><option value="google">Google AI Studio</option><option value="openai">OpenAI (GPT)</option><option value="kie">kie.ai</option></select></label>
+    <label>모델<select id="model"><option value="">전체 모델</option></select></label>
+    <label>번역 기능<select id="kind"><option value="">전체 기능</option><option value="page">본문</option><option value="selection">부분 텍스트</option><option value="image">이미지</option><option value="video">자막</option></select></label>
+    <button id="refresh" type="button">새로고침</button>
+  </section>
+  <p id="status" role="status" aria-live="polite">통계를 불러오는 중…</p>
+  <section class="cards" aria-label="확인된 토큰 합계">
+    <article><h2>입력 토큰</h2><strong id="input">—</strong><small id="input-note"></small></article>
+    <article><h2>출력 토큰</h2><strong id="output">—</strong><small id="output-note"></small></article>
+    <article><h2>추론 토큰</h2><strong id="thoughts">—</strong><small id="thoughts-note"></small></article>
+    <article class="total"><h2>전체 토큰</h2><strong id="total">—</strong><small id="total-note"></small></article>
+  </section>
+  <p id="summary"></p><p id="cached" class="muted"></p>
+  <p id="empty" hidden>선택한 조건의 번역 요청 기록이 없습니다.</p>
+  <section><h2>일별 사용량</h2><div class="table-scroll"><table><caption>요청 시작일별 확인된 토큰 · 최신순</caption><thead><tr><th scope="col">날짜</th><th scope="col">전체 토큰</th><th scope="col">입력</th><th scope="col">출력</th><th scope="col">추론</th><th scope="col">요청 / 미확인</th></tr></thead><tbody id="daily"></tbody></table></div></section>
+  <section><h2>모델별 사용량</h2><div class="table-scroll"><table><caption>선택한 기간·기능의 모델별 합계</caption><thead><tr><th scope="col">모델</th><th scope="col">전체 토큰</th><th scope="col">입력</th><th scope="col">출력</th><th scope="col">추론</th><th scope="col">요청 / 미확인</th></tr></thead><tbody id="models"></tbody></table></div></section>
+  <aside class="explanation"><h2>기록 읽는 방법</h2><p>토큰은 K(천)·M(백만)·B(십억)·T(조) 단위로 반올림합니다. 숫자에 마우스를 올리면 정확한 합계를 확인합니다. 숫자는 응답에서 확인된 합계입니다. <strong>*</strong>는 해당 항목을 알려주지 않은 요청이 포함됨을, <strong>—</strong>는 확인된 값이 없음을 뜻합니다. 미확인 요청은 진행 중·중단·실패 또는 입력/출력/전체 중 일부가 누락된 요청입니다. 미확인을 실제 사용량 0으로 보지 마세요.</p><p>추론 상세가 제공되면 출력에서 분리합니다. kie.ai가 추론 상세를 생략하면 출력에 추론이 포함될 수 있습니다. 캐시 입력은 입력에 포함되며 다시 더하지 않습니다. 전체 토큰은 API 보고값이며, Claude는 입력·캐시 생성/읽기·출력 보고값을 합산합니다. 자동 재시도는 별도 요청으로 기록하고 저장된 번역을 다시 표시하는 경우에는 더하지 않습니다.</p><p id="retention"></p><p>기록 전 사용량·다른 기기의 사용량은 포함되지 않습니다. 청구금액이나 계정 전체 사용량은 해당 공급자에서 확인하세요. API 키·원문·이미지·영상 URL은 이 통계에 저장하지 않습니다.</p></aside>
+  <footer><span id="updated" class="muted"></span><button id="clear" type="button">전체 통계 삭제</button></footer>
+</main><script type="module" src="statistics.mjs"></script></body></html>

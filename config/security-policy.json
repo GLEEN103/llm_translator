@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 18,
+  "formatRetries": {
+    "maxRetries": 3,
+    "delayMs": 5000,
+    "codes": ["INVALID_PROVIDER_RESPONSE", "OPENAI_RESPONSE_JSON", "OPENAI_RESPONSE_FORMAT"],
+    "finalFailure": "skip-failed-batch-keep-video-enabled",
+    "logMaxRows": 100,
+    "logRawContent": false
+  },
+  "translationScheduling": {
+    "maxConcurrentRequests": 5,
+    "maxAttemptsPerMinute": 60,
+    "windowMs": 60000,
+    "restAfterWaveMs": 5000,
+    "scope": "all-tabs-and-translation-providers-including-images-and-retries",
+    "storage": "chrome.storage.session",
+    "localLimitWait": "content-task-cancellable-wait"
+  },
+  "enforcement": "policy-only",
+  "secrets": {
+    "source": "user-settings-ui",
+    "providerKeyRuntime": "extension-background",
+    "kieKeyTransit": "verified-offscreen-private-port-and-dedicated-worker-memory-only",
+    "storage": "chrome.storage.local",
+    "scope": "provider-and-exact-model-id",
+    "temporaryCatalogStorage": "chrome.storage.session",
+    "allowKeyRedisplay": false,
+    "allowSync": false,
+    "allowExport": false,
+    "encryptionAtRest": "not-provided-by-extension",
+    "deletion": [
+      "per-model",
+      "all-models"
+    ],
+    "accessLevel": "TRUSTED_CONTEXTS",
+    "allowBundledProviderKeys": false,
+    "allowKeysInContentScripts": false,
+    "allowPersistentKeyStorage": true,
+    "allowSecretValuesInLogs": false,
+    "openaiKeyTransit": "verified-offscreen-private-port-and-dedicated-worker-memory-only"
+  },
+  "architecture": {
+    "localServerRequired": false,
+    "serverIntroduction": "notify-user-if-technically-required"
+  },
+  "models": {
+    "selection": "provider-catalog-and-audited-support",
+    "bindCatalogToApiKey": true,
+    "sort": "verified-release-date-descending",
+    "unknownReleaseDate": "last"
+  },
+  "dataTransfer": {
+    "requireUserConsent": true,
+    "consentFrequency": "once-per-extension-version",
+    "consentStorage": "chrome.storage.local",
+    "consentAccessLevel": "TRUSTED_CONTEXTS",
+    "minimumNecessaryDataOnly": true,
+    "retainPageContentByDefault": false,
+    "userRequestedTranslationCache": {
+      "storage": "chrome.storage.session",
+      "accessLevel": "TRUSTED_CONTEXTS",
+      "scope": "tab-latest-page-model-revision-languages",
+      "deleteOnTabClose": true,
+      "selectionExcluded": true,
+      "maxEntries": 500,
+      "maxChars": 1000000
+    },
+    "requireHttpsForRemoteEndpoints": true
+  },
+  "imageTranslation": {
+    "recognition": "active-google-or-openai-multimodal-api",
+    "collection": "on-device-canvas-or-cropped-visible-tab",
+    "transmitFullScreenshot": false,
+    "transmitSourceUrl": false,
+    "allowImageUrlFetch": false,
+    "persistPixels": false,
+    "access": "image-menu-token-and-document-grant",
+    "maxBytes": 4194304,
+    "maxEdge": 2048,
+    "sessionAttempts": 50
+  },
+  "videoTranslation": {
+    "source": "current-youtube-watch-and-shorts-player-caption-tracks",
+    "captionFetchOrigin": "https://www.youtube.com",
+    "captionFetchPath": "/api/timedtext",
+    "credentials": "same-origin-youtube-only",
+    "access": "popup-or-inline-button-and-document-grant-and-video-id",
+    "inlineLauncher": {
+      "origin": "https://www.youtube.com",
+      "automaticScriptMatches": [
+        "https://www.youtube.com/*"
+      ],
+      "mainFrameOnly": true,
+      "collectCaptionsOnDetection": false,
+      "translateOnOpen": false
+    },
+    "transmitAudio": false,
+    "transmitVideo": false,
+    "transmitVideoUrl": false,
+    "transmitTimestamps": false,
+    "persistCaptions": false,
+    "resultStorage": "content-memory-and-trusted-local-video-cache",
+    "persistentTranslationCache": {
+      "storage": "chrome.storage.local",
+      "accessLevel": "TRUSTED_CONTEXTS",
+      "maxVideos": 30,
+      "maxBytes": 4194304,
+      "eviction": "least-recently-used-video",
+      "scope": "video-id-provider-model-languages-source-sha256",
+      "storeRawSource": false,
+      "storeKeys": false,
+      "sync": false,
+      "clearFrom": "options.html"
+    },
+    "maxEvents": 5000,
+    "maxChars": 100000,
+    "maxResponseBytes": 2097152,
+    "fallback": "bounded-native-player-caption-response-observation",
+    "observeRequestHeaders": false,
+    "generateYoutubeTokens": false,
+    "observationTimeoutMs": 12000,
+    "restorePlayerTrack": "only-if-unchanged-by-user",
+    "continuous": {
+      "enabledByDefault": false,
+      "persistEnabled": false,
+      "checkIntervalMs": 5000,
+      "minimumReadIntervalMs": 10000,
+      "minimumTranslationIntervalMs": 5000,
+      "maximumRetryDelayMs": 60000,
+      "pauseWhenHiddenOrAdvertising": true
+    },
+    "appearance": {
+      "storage": "chrome.storage.local",
+      "key": "videoAppearance",
+      "accessLevel": "TRUSTED_CONTEXTS",
+      "allowRemoteFonts": false,
+      "allowArbitraryCss": false
+    }
+  },
+  "tokenUsage": {
+    "storage": "chrome.storage.local",
+    "key": "tokenUsage",
+    "accessLevel": "TRUSTED_CONTEXTS",
+    "source": "provider-reported-numeric-usage",
+    "dimensions": [
+      "request-start-local-date",
+      "provider",
+      "exact-model-id",
+      "translation-kind"
+    ],
+    "counters": [
+      "input",
+      "output",
+      "thoughts",
+      "total",
+      "cached-input"
+    ],
+    "retainContent": false,
+    "retainKeys": false,
+    "retainUrls": false,
+    "sync": false,
+    "retentionDays": 365,
+    "maxAggregateRows": 10000,
+    "maxPendingIds": 128,
+    "readPages": [
+      "popup.html",
+      "statistics.html"
+    ],
+    "clearPages": [
+      "statistics.html"
+    ],
+    "missingUsage": "unknown-not-zero",
+    "deleteIndependentOfKeys": true
+  },
+  "providers": {
+    "google": {
+      "apiOrigin": "https://generativelanguage.googleapis.com",
+      "credentialHeader": "x-goog-api-key"
+    },
+    "kie": {
+      "status": "legacy-disabled",
+      "allowSelection": false,
+      "allowRequests": false,
+      "transport": "offscreen-dedicated-worker",
+      "portVerification": "extension-id-origin-tabless-creation-nonce-live-offscreen-context-optional-sender-document-id",
+      "requestTimeoutMs": 180000,
+      "maxConcurrentWorkers": 2,
+      "keepaliveWhileRequestActiveMs": 20000,
+      "closeOffscreenWhenIdle": true,
+      "apiOrigin": "https://api.kie.ai",
+      "credentialHeader": "Authorization: Bearer",
+      "catalogOrigin": "https://docs.kie.ai",
+      "catalogPath": "/llms.txt",
+      "catalogCredentials": false,
+      "endpointSelection": "bundled-audited-allowlist",
+      "text": true,
+      "captions": true,
+      "images": false,
+      "publicPricing": {
+        "url": "https://api.kie.ai/client/v1/model-pricing/page",
+        "credentials": false,
+        "readPages": [
+          "options.html"
+        ],
+        "refreshSeconds": 300,
+        "minimumIntervalSeconds": 30,
+        "retention": "worker-memory",
+        "maxPages": 10,
+        "maxRows": 1000,
+        "pageBytes": 524288,
+        "timeoutMs": 18000,
+        "conversion": "official-credit-and-usd-quote",
+        "unknown": "not-zero"
+      }
+    },
+    "openai": {
+      "status": "enabled",
+      "apiOrigin": "https://api.openai.com",
+      "catalogPath": "/v1/models",
+      "translationPath": "/v1/responses",
+      "credentialHeader": "Authorization: Bearer",
+      "storeResponses": false,
+      "automaticRetries": 0,
+      "requestTimeoutMs": 180000,
+      "uiTimeoutMs": 200000,
+      "transport": "offscreen-dedicated-worker",
+      "maxRequestBytes": 6291456,
+      "maxConcurrentWorkers": 5,
+      "keepaliveWhileRequestActiveMs": 20000,
+      "closeOffscreenWhenIdle": true,
+      "portVerification": "extension-id-origin-tabless-creation-nonce-live-offscreen-context-optional-sender-document-id",
+      "text": true,
+      "captions": true,
+      "images": true
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>Local Translator DOM Fixture</title>
+<style>body{font:16px/1.8 system-ui;margin:36px;color:#20314e;max-width:760px}button{padding:10px;margin:5px}pre{white-space:pre-wrap;background:#edf3fa;padding:14px}#hidden-css{display:none}.faded{opacity:0}</style></head>
+<body><h1>번역 브라우저 검증</h1><p>외부 API를 호출하지 않는 로컬 테스트 페이지입니다.</p>
+<details><summary>텍스트 DOM 검사 결과</summary><pre id="checks" role="status">검사 중…</pre></details>
+<details><summary>이미지 처리 검사 결과</summary><pre id="image-checks" role="status">검사 중…</pre></details>
+<button id="open-image">테스트 이미지 번역</button><button id="open-cors-image">다른 출처 이미지 번역</button><button id="change-image">이미지 교체</button><label><input id="no-image-text" type="checkbox">이미지 문자 없음 응답</label>
+<p><img id="test-image" alt="공개 테스트 안내판" width="640" height="220" style="max-width:100%;height:auto"></p>
+<button id="open-page">본문 번역 패널 열기</button><button id="open-selection">첫 문장 선택 번역</button><button id="mutate">첫 문장 변경</button>
+<p><label><input id="slow" type="checkbox">느린 응답 (취소 검증)</label> <label><input id="fail" type="checkbox">1회 실패 응답</label></p>
+<p id="calls">Mock API calls: 0</p>
+<main><h2>Reading on your own terms</h2>
+<p id="first">Hello world. <a id="link" href="#local">Read this linked phrase.</a> Keep the original text.</p>
+<p id="second">日本語の文章を韓国語に翻訳します。</p>
+<p id="inline-space"><span>Hello</span> <span>again</span></p>
+<p id="duplicate">日本語の文章を韓国語に翻訳します。</p>
+<div id="layout-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div>Grid first</div><div>Grid second</div></div>
+<div id="layout-flex" style="display:flex;gap:10px"><span>Flex first</span><span>Flex second</span></div>
+<table id="layout-table"><tbody><tr><td>Cell first</td><td>Cell second</td></tr></tbody></table>
+<div id="many-elements"></div>
+<p hidden>HIDDEN_ATTRIBUTE_SECRET</p><p id="hidden-css">HIDDEN_CSS_SECRET</p><p class="faded">OPACITY_SECRET</p>
+<div aria-hidden="true"><p>ARIA_HIDDEN_SECRET</p></div>
+<form><label>FORM_SECRET <input value="INPUT_SECRET"></label><input type="password" value="PASSWORD_SECRET"></form>
+<p contenteditable="true">EDITABLE_SECRET</p><button>BUTTON_SECRET</button>
+<div id="shadow"></div><iframe title="Excluded frame" srcdoc="<p>IFRAME_SECRET</p>"></iframe>
+</main>
+<script src="core.js"></script><script src="dom.js"></script><script src="image-dom.js"></script><script src="fixture.js"></script><script src="content.js"></script><script src="image-content.js"></script><script type="module" src="image-fixture.mjs"></script>
+</body></html>
