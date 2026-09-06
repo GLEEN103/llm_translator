@@ -1,14 +1,46 @@
-# Secrets: retain only the public empty template.
+# Local instructions and internal project documents.
+AGENTS.md
+/docs/
+.agents/
+.codex/
+
+# Secrets: no environment-file exceptions.
 .env
 .env.*
-!.env.example
 .secrets/
+secrets/
+secrets.json
+secrets.yaml
+secrets.yml
+secrets.toml
 *.pem
 *.key
 *.p12
 *.pfx
+*.jks
+*.keystore
+*.kdbx
 credentials.json
+credentials.*
+credentials-*.json
+*credentials.json
 service-account*.json
+service_account*.json
+api-key*.json
+api_key*.json
+api-keys.*
+api_keys.*
+apikeys.*
+tokens.json
+auth.json
+.npmrc
+.pypirc
+.netrc
+.git-credentials
+.aws/
+.ssh/
+*.local.json
+*.local.toml
 config/local-server.json
 
 # Dependencies and generated output.

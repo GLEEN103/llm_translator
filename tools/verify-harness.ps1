@@ -18,24 +18,24 @@ function Assert-Condition([bool] $condition, [string] $message) {
     if (-not $condition) { throw $message }
 }
 
-$requiredDirectories = @(
-    'docs/planning', 'docs/implementation-plans',
-    'docs/troubleshooting', 'docs/architecture',
-    'src/extension', 'config', 'tools'
-)
+$hasLocalDocs = Test-Path -LiteralPath (Join-Path $projectRoot 'docs')
+$hasLocalRules = Test-Path -LiteralPath (Join-Path $projectRoot 'AGENTS.md')
+$requiredDirectories = @('src/extension', 'config', 'tools')
+if ($hasLocalDocs -or $hasLocalRules) {
+    Assert-Condition ($hasLocalDocs -and $hasLocalRules) 'Local documentation and AGENTS.md must be kept together.'
+    $requiredDirectories += @('docs/planning', 'docs/implementation-plans', 'docs/troubleshooting', 'docs/architecture')
+}
 foreach ($relativePath in $requiredDirectories) {
     $path = Get-PublicProjectPath $relativePath
     Assert-Condition (Test-Path -LiteralPath $path -PathType Container) "Missing directory: $relativePath"
 }
 
-$requiredFiles = @(
-    'AGENTS.md', 'README.md', '.gitignore',
-    'config/security-policy.json',
-    'docs/planning/product-scope.md',
-    'docs/implementation-plans/0001-project-harness.md',
-    'docs/architecture/repository-layout.md',
-    'docs/architecture/security.md', 'docs/troubleshooting/README.md'
-)
+$requiredFiles = @('README.md', '.gitignore', 'config/security-policy.json', 'guide/installation.md')
+if ($hasLocalDocs -or $hasLocalRules) {
+    $requiredFiles += @('AGENTS.md', 'docs/planning/product-scope.md',
+        'docs/implementation-plans/0001-project-harness.md', 'docs/architecture/repository-layout.md',
+        'docs/architecture/security.md', 'docs/troubleshooting/README.md')
+}
 foreach ($relativePath in $requiredFiles) {
     $path = Get-PublicProjectPath $relativePath
     Assert-Condition (Test-Path -LiteralPath $path -PathType Leaf) "Missing file: $relativePath"
@@ -123,9 +123,11 @@ Assert-Condition ($policy.videoTranslation.appearance.allowRemoteFonts -eq $fals
 Assert-Condition ($policy.videoTranslation.appearance.allowArbitraryCss -eq $false) 'Appearance must use validated values.'
 
 $ignoreRules = Get-Content -LiteralPath (Get-PublicProjectPath '.gitignore')
-foreach ($rule in @('.env', '.env.*', '!.env.example', '.secrets/', '*.pem', '*.key', '*.p12', '*.pfx', '*.log')) {
+foreach ($rule in @('AGENTS.md', '/docs/', '.env', '.env.*', '.secrets/', '*.pem', '*.key', '*.p12', '*.pfx', '*.log', 'credentials.*', 'api-key*.json', 'api_key*.json', 'auth.json', 'tools/.tmp/')) {
     Assert-Condition ($ignoreRules -ccontains $rule) "Missing ignore rule: $rule"
 }
+
+Assert-Condition (-not ($ignoreRules -ccontains '!.env.example')) 'Environment files must not have a public exception.'
 
 Write-Output 'PASS: Project structure, extension-only security policy, and legacy secret ignore rules.'
 Write-Output 'Scope: Configuration checks only; no secret files were read. Use npm test for runtime security tests.'
