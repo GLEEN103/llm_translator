@@ -3,6 +3,7 @@ AGENTS.md
 /docs/
 .agents/
 .codex/
+.claude/
 
 # Secrets: no environment-file exceptions.
 .env

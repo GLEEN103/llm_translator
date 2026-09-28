@@ -13,11 +13,12 @@ test('OpenAI catalog intersects audited models, deduplicates and sorts release d
   const models = await listOpenAIModels({ apiKey: 'DUMMY', now: () => Date.UTC(2026,8,7), fetchImpl: async (url, options) => {
     assert.equal(url, 'https://api.openai.com/v1/models'); assert.deepEqual(options.headers, { Authorization: 'Bearer DUMMY' });
     assert.equal(options.credentials, 'omit'); assert.equal(options.redirect, 'error');
-    return Response.json({ object: 'list', data: ['gpt-4o-mini', 'gpt-5.6-luna', 'gpt-6-astra', 'gpt-6-astra', 'gpt-image-1', 'gpt-future', 'gpt-4o-mini-audio', 'embedding', '../outside'].map(id => ({ id, object: 'model', created: 9999999999 }))
+    return Response.json({ object: 'list', data: ['gpt-4o-mini', 'gpt-6-sol', 'gpt-5.6-luna', 'gpt-6-astra', 'gpt-6-astra', 'gpt-6-luna', 'gpt-image-1', 'gpt-future', 'gpt-4o-mini-audio', 'embedding', '../outside'].map(id => ({ id, object: 'model', created: 9999999999 }))
       .concat([{id:'gpt-5.5',object:'model',shutdown_date:'2026-09-06'}]) });
   } });
-  assert.deepEqual(models.map(m => m.id), ['gpt-6-astra', 'gpt-5.6-luna', 'gpt-4o-mini']);
-  assert.equal(OPENAI_MODELS.length, 12); assert.ok(models.every(m => m.images));
+  assert.deepEqual(models.map(m => m.id), ['gpt-6-luna', 'gpt-6-sol', 'gpt-6-astra', 'gpt-5.6-luna', 'gpt-4o-mini']);
+  assert.ok(models.filter(m => m.id.startsWith('gpt-6-')).every(m => m.family === 'GPT-6' && m.reasoning === 'low'));
+  assert.equal(OPENAI_MODELS.length, 14); assert.ok(models.every(m => m.images));
 });
 test('OpenAI catalog errors sanitize upstream text and respect cancellation', async () => {
   await assert.rejects(listOpenAIModels({ fetchImpl: async () => Response.json({error:'SECRET'}, {status:401}) }),{code:'PROVIDER_AUTH'});

@@ -2,10 +2,12 @@ import { AppError } from './contract.mjs';
 import { readJson } from './google.mjs';
 
 export const OPENAI_BASE = 'https://api.openai.com/v1';
-// Audited 2026-09-07: each /api/docs/models/<id> page confirms Responses, vision and
-// Structured Outputs. Release dates: API changelog and openai.com/index/gpt-5-6/.
+// Audited 2026-09-07 (GPT-6 Sol/Luna: 2026-09-29): each /api/docs/models/<id> page confirms
+// Responses, vision and Structured Outputs. Release dates: API changelog and openai.com/index/gpt-5-6/.
 // Only documented snapshots are listed. Never guess support from a model-name prefix.
 const families = [
+  ['gpt-6-sol', 'GPT-6 Sol', '2026-09-22', 'low'],
+  ['gpt-6-luna', 'GPT-6 Luna', '2026-09-22', 'low'],
   ['gpt-6-astra', 'GPT-6 Astra', '2026-09-03', 'low'],
   ['gpt-5.6-sol', 'GPT-5.6 Sol', '2026-07-09', 'low'],
   ['gpt-5.6-terra', 'GPT-5.6 Terra', '2026-07-09', 'low'],
