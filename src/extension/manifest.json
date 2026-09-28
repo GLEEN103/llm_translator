@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Local LLM Translator",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "기기 내 수집·오버레이, Google AI Studio 및 OpenAI 텍스트·이미지·YouTube 자막 번역",
   "minimum_chrome_version": "116",
   "permissions": [
